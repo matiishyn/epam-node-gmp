@@ -1,1 +1,1 @@
-# epam-node-gmp
+# EPAM NodeJS Global Mentoring Program
