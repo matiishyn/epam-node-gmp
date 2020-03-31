@@ -1,4 +1,4 @@
-const readline = require('readline');
+import readline from 'readline';
 
 const getObj = (propsArr, valsArr) =>
     propsArr.reduce((acc, curr, ind) => ({[curr]: valsArr[ind], ...acc}), {});
@@ -34,4 +34,4 @@ const parseFile = (readStream, writeStream) => {
     });
 };
 
-module.exports = parseFile;
+export default parseFile;
