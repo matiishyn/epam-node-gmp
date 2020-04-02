@@ -4,9 +4,18 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src/**/*.ts"
+    ],
+    "ignore": [
+      "src/public"
+    ],
+    "exec": "NODE_ENV=development ts-node src/index.ts"
   },
   "dependencies": {
     "express": "^4.17.1"
