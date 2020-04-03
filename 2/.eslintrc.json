@@ -20,10 +20,7 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  "plugins": [
-    "prettier",
-    "@typescript-eslint"
-  ],
+  "plugins": ["prettier", "@typescript-eslint"],
   "rules": {
     "prettier/prettier": "error",
     "import/extensions": [
@@ -33,15 +30,15 @@
         "js": "never",
         "ts": "never"
       }
-    ]
+    ],
+    "lines-between-class-members": 0,
+    "import/prefer-default-export": 0,
+    "prefer-destructuring": 0
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [
-          ".js",
-          ".ts"
-        ]
+        "extensions": [".js", ".ts"]
       }
     }
   }

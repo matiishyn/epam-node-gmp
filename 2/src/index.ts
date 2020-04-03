@@ -1,13 +1,23 @@
+import 'dotenv/config';
 import express from 'express';
-import { rootHandler, helloHandler } from './api';
+import cors from 'cors';
+import helmet from 'helmet';
+import { usersRouter } from './users/users.router';
+import { errorHandler } from './middleware/error.middleware';
+import { notFoundHandler } from './middleware/notFound.middleware';
 
+const PORT = process.env.PORT || '3000';
 const app = express();
-const port = process.env.PORT || '3000';
 
-app.get('/', rootHandler);
-app.get('/hello/:name', helloHandler);
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
 
-app.listen(port, (err) => {
+app.use('/users', usersRouter);
+app.use(errorHandler);
+app.use(notFoundHandler);
+
+app.listen(PORT, (err) => {
   if (err) return console.error(err);
-  return console.log(`Server is listening on ${port}`);
+  return console.log(`Listening on port ${PORT}`);
 });
