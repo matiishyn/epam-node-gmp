@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { User } from './users.interface';
-import * as UserService from './users.service';
+import UserService from './users.service';
 
 export const usersRouter = express.Router();
 
@@ -29,7 +29,7 @@ usersRouter.get('/', async (req: Request, res: Response) => {
 usersRouter.get('/:id', async (req: Request, res: Response) => {
   const id: string = req.params.id;
   try {
-    const user: User = await UserService.find(id);
+    const user: User = await UserService.findOne(id);
     res.status(200).send(user);
   } catch (e) {
     res.status(404).send(e.message);
