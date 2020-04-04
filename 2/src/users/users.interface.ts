@@ -1,11 +1,7 @@
 export interface User {
-  id: number;
+  id: string;
   login: string;
   password: string;
   age: number;
   isDeleted: boolean;
-}
-
-export interface Users {
-  [key: number]: User;
 }

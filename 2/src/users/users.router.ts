@@ -1,13 +1,24 @@
 import express, { Request, Response } from 'express';
-import { User, Users } from './users.interface';
+import { User } from './users.interface';
 import * as UserService from './users.service';
 
 export const usersRouter = express.Router();
 
+/*
+REST API description
+====================
+GET 	  /users : Get all users
+POST 	  /users : Create a new user
+
+GET 	  /users/{id} : Get the user information identified by "id"
+PUT 	  /users/{id} : Update the user information identified by "id"
+DELETE	/users/{id} : Delete user by "id"
+ */
+
 // GET users/
 usersRouter.get('/', async (req: Request, res: Response) => {
   try {
-    const users: Users = await UserService.findAll();
+    const users: User[] = await UserService.findAll();
     res.status(200).send(users);
   } catch (e) {
     res.status(404).send(e.message);
@@ -16,7 +27,7 @@ usersRouter.get('/', async (req: Request, res: Response) => {
 
 // GET users/:id
 usersRouter.get('/:id', async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
+  const id: string = req.params.id;
   try {
     const user: User = await UserService.find(id);
     res.status(200).send(user);
@@ -26,9 +37,9 @@ usersRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 // POST users/
-usersRouter.post('/', async (req: Request, res: Response) => {
+usersRouter.post('/', async (req: Request, res: Response<User>) => {
   try {
-    const user: User = req.body.user;
+    const user: User = req.body;
     await UserService.create(user);
     res.sendStatus(201);
   } catch (e) {
@@ -37,10 +48,11 @@ usersRouter.post('/', async (req: Request, res: Response) => {
 });
 
 // PUT users/
-usersRouter.put('/', async (req: Request, res: Response) => {
+usersRouter.put('/:id', async (req: Request, res: Response) => {
   try {
-    const user: User = req.body.user;
-    await UserService.update(user);
+    const id: string = req.params.id;
+    const user: User = req.body;
+    await UserService.update(id, user);
     res.sendStatus(200);
   } catch (e) {
     res.status(500).send(e.message);
@@ -50,7 +62,7 @@ usersRouter.put('/', async (req: Request, res: Response) => {
 // DELETE users/:id
 usersRouter.delete('/:id', async (req: Request, res: Response) => {
   try {
-    const id: number = parseInt(req.params.id, 10);
+    const id: string = req.params.id;
     await UserService.remove(id);
     res.sendStatus(200);
   } catch (e) {
