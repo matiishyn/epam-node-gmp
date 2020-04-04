@@ -7,8 +7,9 @@ export const usersRouter = express.Router();
 /*
 REST API description
 ====================
-GET 	  /users : Get all users
-POST 	  /users : Create a new user
+GET 	  /users                : Get all users
+GET     /users?search&limit   : getAutoSuggestUsers
+POST 	  /users                : Create a new user
 
 GET 	  /users/{id} : Get the user information identified by "id"
 PUT 	  /users/{id} : Update the user information identified by "id"
@@ -18,7 +19,10 @@ DELETE	/users/{id} : Delete user by "id"
 // GET users/
 usersRouter.get('/', async (req: Request, res: Response) => {
   try {
-    const users: User[] = await UserService.findAll();
+    const { search, limit } = req.query;
+    const users: User[] = search
+      ? await UserService.getAutoSuggestUsers(search, limit)
+      : await UserService.findAll();
     res.status(200).send(users);
   } catch (e) {
     res.status(404).send(e.message);

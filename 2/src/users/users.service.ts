@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import _ from 'lodash';
 import { User } from './users.interface';
 
 interface IUsersService {
@@ -7,6 +8,7 @@ interface IUsersService {
   create(newUser: User): Promise<void>;
   update(id: string, updatedUser: User): Promise<void>;
   remove(id: string): Promise<void>;
+  getAutoSuggestUsers(search: string, limit: number): Promise<User[]>;
 }
 
 class UsersService implements IUsersService {
@@ -93,6 +95,16 @@ class UsersService implements IUsersService {
     };
     this.replaceUser(userInd, editedUser);
   };
+
+  public getAutoSuggestUsers = async (
+    search: string,
+    limit: number
+  ): Promise<User[]> =>
+    _.chain(this.users)
+      .filter((u) => u.login.includes(search))
+      .sortBy('login')
+      .take(limit || this.users.length) // take all if no limit
+      .value();
 }
 
 const users = new UsersService();
