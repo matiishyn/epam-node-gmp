@@ -67,9 +67,14 @@ export const update = async (id: string, updatedUser: User): Promise<void> => {
 };
 
 export const remove = async (id: string): Promise<void> => {
-  const foundUser: User | undefined = users.find((u) => u.id === id);
-  if (!foundUser) {
+  const userInd: number = users.findIndex((u) => u.id === id);
+  const userToEdit = users[userInd];
+  if (!userToEdit) {
     throw new Error('No record found to delete');
   }
-  users = users.filter((u) => u.id !== id);
+  const editedUser: User = {
+    ...userToEdit,
+    isDeleted: true,
+  };
+  users = [...users.slice(0, userInd), editedUser, ...users.slice(userInd + 1)];
 };
