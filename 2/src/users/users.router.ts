@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { User } from './users.interface';
 import UserService from './users.service';
+import { usersBodyValidator } from './users.validator';
 
 export const usersRouter = express.Router();
 
@@ -41,27 +42,35 @@ usersRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 // POST users/
-usersRouter.post('/', async (req: Request, res: Response<User>) => {
-  try {
-    const user: User = req.body;
-    await UserService.create(user);
-    res.sendStatus(201);
-  } catch (e) {
-    res.status(404).send(e.message);
+usersRouter.post(
+  '/',
+  usersBodyValidator,
+  async (req: Request, res: Response<User>) => {
+    try {
+      const user: User = req.body;
+      await UserService.create(user);
+      res.sendStatus(201);
+    } catch (e) {
+      res.status(404).send(e.message);
+    }
   }
-});
+);
 
 // PUT users/
-usersRouter.put('/:id', async (req: Request, res: Response) => {
-  try {
-    const id: string = req.params.id;
-    const user: User = req.body;
-    await UserService.update(id, user);
-    res.sendStatus(200);
-  } catch (e) {
-    res.status(500).send(e.message);
+usersRouter.put(
+  '/:id',
+  usersBodyValidator,
+  async (req: Request, res: Response) => {
+    try {
+      const id: string = req.params.id;
+      const user: User = req.body;
+      await UserService.update(id, user);
+      res.sendStatus(200);
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
   }
-});
+);
 
 // DELETE users/:id
 usersRouter.delete('/:id', async (req: Request, res: Response) => {
