@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-// import UserService from '../users/users.service';
-// import { usersBodyValidator } from '../users/users.validator';
 import User from '../models/user';
+import { usersBodyValidator } from '../users/users.validator';
+import UserController from '../controllers/user';
 
 export const usersRouter = express.Router();
 
@@ -17,15 +17,46 @@ PUT 	  /users/{id} : Update the user information identified by "id"
 DELETE	/users/{id} : Delete user by "id"
  */
 
-// GET users/
-usersRouter.get('/', async (req: Request, res: Response) => {
-  try {
-    const users = await User.findAll();
-    res.status(200).send(users);
-  } catch (e) {
-    res.status(404).send(e.message);
-  }
-});
+usersRouter
+  // GET users/
+  .get('/', async (req: Request, res: Response) => {
+    try {
+      const users = await UserController.getAll();
+      res.status(200).send(users);
+    } catch (e) {
+      res.status(404).send(e.message);
+    }
+  })
+  // GET users/:id
+  .get('/:id', async (req: Request, res: Response) => {
+    const id: string = req.params.id;
+    try {
+      const user: User = await UserController.getOne(id);
+      res.status(200).send(user);
+    } catch (e) {
+      res.status(404).send(e.message);
+    }
+  })
+  // POST users/
+  .post('/', usersBodyValidator, async (req: Request, res: Response<User>) => {
+    try {
+      const user: User = req.body;
+      await UserController.create(user);
+      res.sendStatus(201);
+    } catch (e) {
+      res.status(404).send(e.message);
+    }
+  })
+  .put('/:id', usersBodyValidator, async (req: Request, res: Response) => {
+    try {
+      const id: string = req.params.id;
+      const user: User = req.body;
+      await UserController.update(id, user);
+      res.sendStatus(200);
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
+  });
 /*
 usersRouter.get('/', async (req: Request, res: Response) => {
   try {
@@ -42,46 +73,6 @@ usersRouter.get('/', async (req: Request, res: Response) => {
 
 // GET users/:id
 /*
-usersRouter.get('/:id', async (req: Request, res: Response) => {
-  const id: string = req.params.id;
-  try {
-    const user: User = await UserService.findOne(id);
-    res.status(200).send(user);
-  } catch (e) {
-    res.status(404).send(e.message);
-  }
-});
-
-// POST users/
-usersRouter.post(
-  '/',
-  usersBodyValidator,
-  async (req: Request, res: Response<User>) => {
-    try {
-      const user: User = req.body;
-      await UserService.create(user);
-      res.sendStatus(201);
-    } catch (e) {
-      res.status(404).send(e.message);
-    }
-  }
-);
-
-// PUT users/
-usersRouter.put(
-  '/:id',
-  usersBodyValidator,
-  async (req: Request, res: Response) => {
-    try {
-      const id: string = req.params.id;
-      const user: User = req.body;
-      await UserService.update(id, user);
-      res.sendStatus(200);
-    } catch (e) {
-      res.status(500).send(e.message);
-    }
-  }
-);
 
 // DELETE users/:id
 usersRouter.delete('/:id', async (req: Request, res: Response) => {
