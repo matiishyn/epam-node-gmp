@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { User } from './users.interface';
-import UserService from './users.service';
-import { usersBodyValidator } from './users.validator';
+// import UserService from '../users/users.service';
+// import { usersBodyValidator } from '../users/users.validator';
+import User from '../models/user';
 
 export const usersRouter = express.Router();
 
@@ -20,6 +20,15 @@ DELETE	/users/{id} : Delete user by "id"
 // GET users/
 usersRouter.get('/', async (req: Request, res: Response) => {
   try {
+    const users = await User.findAll();
+    res.status(200).send(users);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+/*
+usersRouter.get('/', async (req: Request, res: Response) => {
+  try {
     const { search, limit } = req.query;
     const users: User[] = search
       ? await UserService.getAutoSuggestUsers(search, limit)
@@ -29,8 +38,10 @@ usersRouter.get('/', async (req: Request, res: Response) => {
     res.status(404).send(e.message);
   }
 });
+*/
 
 // GET users/:id
+/*
 usersRouter.get('/:id', async (req: Request, res: Response) => {
   const id: string = req.params.id;
   try {
@@ -82,3 +93,4 @@ usersRouter.delete('/:id', async (req: Request, res: Response) => {
     res.status(500).send(e.message);
   }
 });
+*/
