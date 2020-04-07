@@ -4,7 +4,7 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
   defaultScope: {
     // attributes: { exclude: ['deletedAt'] },
   },
-  timestamps: false,
+  timestamps: false, // exclude createdAt, updatedAt
   // paranoid: true,
   // tableName: 'chefs',
 })
