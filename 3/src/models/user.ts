@@ -1,12 +1,7 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table({
-  defaultScope: {
-    // attributes: { exclude: ['deletedAt'] },
-  },
   timestamps: false, // exclude createdAt, updatedAt
-  // paranoid: true,
-  // tableName: 'chefs',
 })
 export default class User extends Model<User> {
   @Column({

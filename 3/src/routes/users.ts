@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import User from '../models/user';
-import { usersBodyValidator } from '../users/users.validator';
+import { usersBodyValidator } from '../validators/users.validator';
 import UserController from '../controllers/user';
 
 export const usersRouter = express.Router();
@@ -69,16 +69,3 @@ usersRouter
       res.status(500).send(e.message);
     }
   });
-/*
-usersRouter.get('/', async (req: Request, res: Response) => {
-  try {
-    const { search, limit } = req.query;
-    const users: User[] = search
-      ? await UserService.getAutoSuggestUsers(search, limit)
-      : await UserService.findAll();
-    res.status(200).send(users);
-  } catch (e) {
-    res.status(404).send(e.message);
-  }
-});
-*/

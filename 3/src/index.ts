@@ -1,4 +1,4 @@
-import app from './server';
+import app from './app';
 import CONFIG from './config';
 import db from './services/db';
 

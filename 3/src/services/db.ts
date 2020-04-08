@@ -8,7 +8,6 @@ const db = new Sequelize(CONFIG.DB_URL, {
     multipleStatements: true,
   },
   // logging: false,
-  // models
   models: [User],
 });
 
