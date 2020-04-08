@@ -21,7 +21,10 @@ usersRouter
   // GET users/
   .get('/', async (req: Request, res: Response) => {
     try {
-      const users = await UserController.getAll();
+      const { search, limit } = req.query;
+      const users: User[] = search
+        ? await UserController.getAutoSuggestUsers(search, limit)
+        : await UserController.getAll();
       res.status(200).send(users);
     } catch (e) {
       res.status(404).send(e.message);
