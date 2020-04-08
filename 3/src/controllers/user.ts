@@ -28,4 +28,17 @@ export default class UserController {
     }
     return updated;
   }
+
+  static async remove(id: string) {
+    const [updated] = await User.update(
+      { isDeleted: true },
+      {
+        where: { id },
+      }
+    );
+    if (!updated) {
+      throw new Error('User is not found');
+    }
+    return updated;
+  }
 }

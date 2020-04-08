@@ -56,6 +56,15 @@ usersRouter
     } catch (e) {
       res.status(500).send(e.message);
     }
+  })
+  .delete('/:id', async (req: Request, res: Response) => {
+    try {
+      const id: string = req.params.id;
+      await UserController.remove(id);
+      res.sendStatus(200);
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
   });
 /*
 usersRouter.get('/', async (req: Request, res: Response) => {
@@ -67,21 +76,6 @@ usersRouter.get('/', async (req: Request, res: Response) => {
     res.status(200).send(users);
   } catch (e) {
     res.status(404).send(e.message);
-  }
-});
-*/
-
-// GET users/:id
-/*
-
-// DELETE users/:id
-usersRouter.delete('/:id', async (req: Request, res: Response) => {
-  try {
-    const id: string = req.params.id;
-    await UserService.remove(id);
-    res.sendStatus(200);
-  } catch (e) {
-    res.status(500).send(e.message);
   }
 });
 */
