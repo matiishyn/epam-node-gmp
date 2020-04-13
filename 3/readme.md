@@ -3,9 +3,11 @@
 
 ## Tech Stack
 * Node.js `13`
-* TypeScript `3.8`
-* Express `4.17`
-* Sequelize `5`, pg `8`
+* Lang: TypeScript `3.8`
+* Framework: Express `4.17`
+* ORM: Sequelize `5`, [Active Record pattern (Models)](https://en.wikipedia.org/wiki/Active_record_pattern)
+* Database: PostreSQL `8`
+* Validator: joi-validation
 
 ## DB setup
 * you have to have postgres server running locally
