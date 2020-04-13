@@ -1,6 +1,12 @@
 # Task 3
 * [Task Description](https://epam.sharepoint.com/sites/EPAMNode.jsGlobalMentoringProgram/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FEPAMNode%2EjsGlobalMentoringProgram%2FShared%20Documents%2FGeneral%2FHomework%2FModule%203%2FHomework%203%2Epdf&parent=%2Fsites%2FEPAMNode%2EjsGlobalMentoringProgram%2FShared%20Documents%2FGeneral%2FHomework%2FModule%203&p=true&originalPath=aHR0cHM6Ly9lcGFtLnNoYXJlcG9pbnQuY29tLzpiOi9zL0VQQU1Ob2RlLmpzR2xvYmFsTWVudG9yaW5nUHJvZ3JhbS9FVmZWRVl4VVhxMUZ1NXFYcW9YTnFxTUJqQXczYzZPRXNPUU9IU3Zta3NUUlpBP3J0aW1lPU5tWEd5cW5ZMTBn) 
 
+## Tech Stack
+* Node.js `13`
+* TypeScript `3.8`
+* Express `4.17`
+* Sequelize `5`, pg `8`
+
 ## DB setup
 * you have to have postgres server running locally
 * copy `.env.example` to `.env` and put DB data in there
